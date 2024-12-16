@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Ordering App</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="header"></div>
+  <!-- Header -->
+  <header class="header">
+    <div class="menu-icon" id="menu-toggle">
+      <!-- Hamburger Menu -->
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <h1 class="welcome">Monsier Spoon</h1>
+    <div class="cart-icon">
+      <i class="fa fa-shopping-bag"></i> <!-- Ikon di sisi kiri -->
+      <span class="cart-count">0</span> <!-- Angka di sisi kanan -->
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" placeholder="Search menu, categories, flavor, etc..." />
+    </div>
+
+    <!-- Image Carousel -->
+    <section class="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="img/display/clock.jpg" alt="Offer 1">
+        </div>
+        <div class="carousel-item">
+          <img src="img/display/deserts.jpg" alt="Offer 2">
+        </div>
+        <div class="carousel-item">
+          <img src="img/display/sweet.jpg" alt="Offer 3">
+        </div>
+      </div>
+      <div class="carousel-indicators">
+        <span class="indicator active" data-slide="0"></span>
+        <span class="indicator" data-slide="1"></span>
+        <span class="indicator" data-slide="2"></span>
+      </div>
+    </section>
+
+   <!-- Categories -->
+<section class="categories">
+  <div class="categories-header">
+    <h2>Categories</h2>
+    <button class="view-all-btn" onclick="toggleView()">View All</button>
+  </div>
+  <div class="category-list">
+    <div class="category-item">
+      <i class="fas fa-bread-slice"></i>
+      <span>Brunch</span>
+    </div>
+    <div class="category-item">
+      <i class="fas fa-hamburger"></i>
+      <span>Sandwich</span>
+    </div>
+    <div class="category-item">
+      <i class="fas fa-leaf"></i>
+      <span>Salad</span>
+    </div>
+    <div class="category-item">
+      <i class="fas fa-utensil-spoon"></i>
+      <span>Soup</span>
+    </div>
+    <div class="category-item">
+      <i class="fas fa-utensils"></i>
+      <span>Entre</span>
+    </div>
+    <div class="category-item">
+      <i class="fas fa-carrot"></i>
+      <span>Side</span>
+    </div>
+    <div class="category-item">
+      <i class="fas fa-pizza-slice"></i>
+      <span>Pasta</span>
+    </div>
+    <div class="category-item">
+      <i class="fas fa-drumstick-bite"></i>
+      <span>Mains</span>
+    </div>
+    <div class="category-item">
+      <i class="fa-solid fa-bowl-food"></i>
+      <span>Rice</span>
+    </div>
+    <div class="category-item">
+      <i class="fas fa-ice-cream"></i>
+      <span>Dessert</span>
+    </div>
+    <div class="category-item">
+      <i class="fas fa-cookie"></i>
+      <span>Pastry</span>
+    </div>
+    <div class="category-item">
+      <i class="fas fa-coffee"></i>
+      <span>Drinks</span>
+    </div>
+  </div>
+</section>
+
+
+<main class="content">
+  <section id="promos">
+    <h2>Promo Terkini</h2>
+
+    <div class="promo-tabs">
+      <button class="tab-button" data-tab="bank">Promo Bank</button>
+      <button class="tab-button" data-tab="grab">Promo Grab</button>
+      <button class="tab-button" data-tab="champ">Promo Champ</button>
+    </div>
+
+    <!-- Tab Content for Bank Promos -->
+    <div id="bank" class="tab-content active">
+      <div class="promo-card expandable">
+        <h3>BCA (Senin - Jumat) <span class="expand-icon">+</span></h3>
+        <div class="promo-details">
+          <p><strong>Diskon:</strong> 25%</p>
+          <p><strong>Minimal Pembelanjaan:</strong> Rp350.000</p>
+          <p><strong>Maksimal Diskon:</strong> Rp100.000</p>
+          <p><strong>Berlaku:</strong> Senin - Jumat (Until 31 Dec 2024)</p>
+          <p><strong>Kartu:</strong> Semua kartu kredit BCA</p>
+        </div>
+      </div>
+      <div class="promo-card expandable">
+        <h3>Maybank (Everyday) <span class="expand-icon">+</span></h3>
+        <div class="promo-details">
+          <div class="promo-type">
+            <p><strong>Jenis Kartu:</strong> Kartu Contactless & Visa</p>
+            <p><strong>Diskon:</strong> 50%</p>
+            <p><strong>Minimal Pembelanjaan:</strong> Rp500.000</p>
+            <p><strong>Maksimal Diskon:</strong> Rp300.000</p>
+          </div>
+          <div class="promo-type">
+            <p><strong>Jenis Kartu:</strong> Kartu Mastercard DCB</p>
+            <p><strong>Diskon:</strong> 50%</p>
+            <p><strong>Minimal Pembelanjaan:</strong> Rp500.000</p>
+            <p><strong>Maksimal Diskon:</strong> Rp150.000</p>
+            <p><strong>Berlaku:</strong>Setiap hari (until 31 Jan 2025)</p>
+          </div>
+        </div>
+      </div>
+      <div class="promo-card expandable">
+        <h3>OCBC (Everyday) <span class="expand-icon">+</span></h3>
+        <div class="promo-details">
+          <p><strong>Diskon:</strong> 20%</p>
+          <p><strong>Minimal Pembelanjaan:</strong> Rp500.000</p>
+          <p><strong>Maksimal Diskon:</strong> Rp300.000</p>
+          <p><strong>Berlaku:</strong>Setiap hari (until 30 June 2025)</p>
+        </div>
+      </div>
+      <div class="promo-card expandable">
+        <h3>CIMB (Sabtu & Minggu) <span class="expand-icon">+</span></h3>
+        <div class="promo-details">
+          <p><strong>Diskon:</strong> 20%</p>
+          <p><strong>Minimal Pembelanjaan:</strong> Rp400.000</p>
+          <p><strong>Maksimal Diskon:</strong> Rp150.000</p>
+          <p><strong>Berlaku:</strong>Sabtu & Minggu</p>
+        </div>
+      </div>
+      <div class="promo-card expandable">
+        <h3>Mandiri (Sabtu & Minggu) <span class="expand-icon">+</span></h3>
+        <div class="promo-details">
+          <div class="promo-type">
+            <p><strong>Jenis Kartu:</strong> Credit card holder</p>
+            <p><strong>Diskon:</strong> 20%</p>
+            <p><strong>Minimal Pembelanjaan:</strong> Rp400.000</p>
+            <p><strong>Maksimal Diskon:</strong> Rp100.000</p>
+          </div>
+          <div class="promo-type">
+            <p><strong>Jenis Kartu:</strong> Debit & Credit card holder</p>
+            <p><strong>Diskon:</strong> 10%</p>
+            <p><strong>Minimal Pembelanjaan:</strong> Rp400.000</p>
+            <p><strong>Maksimal Diskon:</strong> Rp250.000</p>
+            <p><strong>Berlaku:</strong>Sabtu & Minggu (until 30 June 2025)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other Tabs Content -->
+    <div id="grab" class="tab-content">
+      <div class="promo-card expandable">
+        <h3>Grab Voucher <span class="expand-icon">+</span></h3>
+        <div class="promo-details">
+          <p><strong>Diskon:</strong> Rp100.000 atau Rp200.000</p>
+          <p><strong>Berlaku:</strong> Senin hingga Jumat</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="champ" class="tab-content">
+      <div class="promo-card expandable">
+        <h3>Voucher Champ <span class="expand-icon">+</span></h3>
+        <div class="promo-details">
+          <p><strong>Promo For New User</strong></p>
+          <p><strong>Diskon:</strong> Rp100.000</p>
+          <p><strong>Berlaku:</strong> Setiap hari</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+
+
+    <!--Brunch Menu Section-->
+      <section class="products">
+        <h2>Brunch Menu <button class="view-all-btn">View All</button></h2>
+        <div class="product-list">
+          <!-- Product Item -->
+          <div class="product-item" 
+          data-title="Super Healthy Bowl" 
+          data-description="Strawberry, banana, Granola, Coconut Flake & Goji Berry yg disajikan dengan dragon & Banana Smoothies (Fresh, Sweet & Soury)." 
+          data-price="Rp.100.000" 
+          data-img="img/brunch/healthybowls.jpg" 
+          data-ingredients="Banana, Granola, Coconut Flake, Goji Berry">
+       <img src="img/brunch/healthybowls.jpg" alt="Chicken Salad" />
+       <h3>Super Healthy Bowl</h3>
+       <p class="price">Rp.100.000</p>
+       <p class="description">Healthy food.</p>
+       <div class="quantity">
+         <button class="qty-btn minus">-</button>
+         <input type="number" value="1" class="qty-input" min="1" />
+         <button class="qty-btn plus">+</button>
+       </div>
+       <button class="add-to-cart">Add to Cart</button>
+     </div>
+          <!-- Product Item -->
+          <div class="product-item" 
+          data-title="Avocado Bruschetta" 
+          data-description="Strawberry, banana, Granola, Coconut Flake & Goji Berry yg disajikan dengan dragon & Banana Smoothies (Fresh, Sweet & Soury)." 
+          data-price="Rp.200.000" 
+          data-img="img/brunch/bruschetta.jpg" 
+          data-ingredients="Sourdough, avocado">
+       <img src="img/brunch/bruschetta.jpg" alt="Chicken Salad" />
+       <h3>Avocado Bruschetta</h3>
+       <p class="price">Rp.200.000</p>
+       <p class="description">Healthy food.</p>
+       <div class="quantity">
+         <button class="qty-btn minus">-</button>
+         <input type="number" value="1" class="qty-input" min="1" />
+         <button class="qty-btn plus">+</button>
+       </div>
+       <button class="add-to-cart">Add to Cart</button>
+     </div>
+     <!-- Product Item -->
+     <div class="product-item" 
+     data-title="Super Healthy Bowl" 
+     data-description="Strawberry, banana, Granola, Coconut Flake & Goji Berry yg disajikan dengan dragon & Banana Smoothies (Fresh, Sweet & Soury)." 
+     data-price="Rp.100.000" 
+     data-img="img/brunch/healthybowls.jpg" 
+     data-ingredients="Banana, Granola, Coconut Flake, Goji Berry">
+  <img src="img/brunch/healthybowls.jpg" alt="Chicken Salad" />
+  <h3>Super Healthy Bowl</h3>
+  <p class="price">Rp.100.000</p>
+  <p class="description">Healthy food.</p>
+  <div class="quantity">
+    <button class="qty-btn minus">-</button>
+    <input type="number" value="1" class="qty-input" min="1" />
+    <button class="qty-btn plus">+</button>
+  </div>
+  <button class="add-to-cart">Add to Cart</button>
+</div>
+     <!-- Product Item -->
+     <div class="product-item" 
+     data-title="Avocado Bruschetta" 
+     data-description="Strawberry, banana, Granola, Coconut Flake & Goji Berry yg disajikan dengan dragon & Banana Smoothies (Fresh, Sweet & Soury)." 
+     data-price="Rp.200.000" 
+     data-img="img/brunch/bruschetta.jpg" 
+     data-ingredients="Sourdough, avocado">
+  <img src="img/brunch/bruschetta.jpg" alt="Chicken Salad" />
+  <h3>Avocado Bruschetta</h3>
+  <p class="price">Rp.200.000</p>
+  <p class="description">Healthy food.</p>
+  <div class="quantity">
+    <button class="qty-btn minus">-</button>
+    <input type="number" value="1" class="qty-input" min="1" />
+    <button class="qty-btn plus">+</button>
+  </div>
+  <button class="add-to-cart">Add to Cart</button>
+</div>
+<!-- Product Item -->
+<div class="product-item" 
+data-title="Super Healthy Bowl" 
+data-description="Strawberry, banana, Granola, Coconut Flake & Goji Berry yg disajikan dengan dragon & Banana Smoothies (Fresh, Sweet & Soury)." 
+data-price="Rp.100.000" 
+data-img="img/brunch/healthybowls.jpg" 
+data-ingredients="Banana, Granola, Coconut Flake, Goji Berry">
+<img src="img/brunch/healthybowls.jpg" alt="Chicken Salad" />
+<h3>Super Healthy Bowl</h3>
+<p class="price">Rp.100.000</p>
+<p class="description">Healthy food.</p>
+<div class="quantity">
+<button class="qty-btn minus">-</button>
+<input type="number" value="1" class="qty-input" min="1" />
+<button class="qty-btn plus">+</button>
+</div>
+<button class="add-to-cart">Add to Cart</button>
+</div>
+<!-- Product Item -->
+<div class="product-item" 
+data-title="Avocado Bruschetta" 
+data-description="Strawberry, banana, Granola, Coconut Flake & Goji Berry yg disajikan dengan dragon & Banana Smoothies (Fresh, Sweet & Soury)." 
+data-price="Rp.200.000" 
+data-img="img/brunch/bruschetta.jpg" 
+data-ingredients="Sourdough, avocado">
+<img src="img/brunch/bruschetta.jpg" alt="Chicken Salad" />
+<h3>Avocado Bruschetta</h3>
+<p class="price">Rp.200.000</p>
+<p class="description">Healthy food.</p>
+<div class="quantity">
+<button class="qty-btn minus">-</button>
+<input type="number" value="1" class="qty-input" min="1" />
+<button class="qty-btn plus">+</button>
+</div>
+<button class="add-to-cart">Add to Cart</button>
+</div>
+<!-- Product Item -->
+<div class="product-item" 
+data-title="Super Healthy Bowl" 
+data-description="Strawberry, banana, Granola, Coconut Flake & Goji Berry yg disajikan dengan dragon & Banana Smoothies (Fresh, Sweet & Soury)." 
+data-price="Rp.100.000" 
+data-img="img/brunch/healthybowls.jpg" 
+data-ingredients="Banana, Granola, Coconut Flake, Goji Berry">
+<img src="img/brunch/healthybowls.jpg" alt="Chicken Salad" />
+<h3>Super Healthy Bowl</h3>
+<p class="price">Rp.100.000</p>
+<p class="description">Healthy food.</p>
+<div class="quantity">
+<button class="qty-btn minus">-</button>
+<input type="number" value="1" class="qty-input" min="1" />
+<button class="qty-btn plus">+</button>
+</div>
+<button class="add-to-cart">Add to Cart</button>
+</div>
+        <!-- Product Item -->
+        <div class="product-item" 
+        data-title="Avocado Bruschetta" 
+        data-description="Strawberry, banana, Granola, Coconut Flake & Goji Berry yg disajikan dengan dragon & Banana Smoothies (Fresh, Sweet & Soury)." 
+        data-price="Rp.200.000" 
+        data-img="img/brunch/bruschetta.jpg" 
+        data-ingredients="Sourdough, avocado">
+        <img src="img/brunch/bruschetta.jpg" alt="Chicken Salad" />
+        <h3>Avocado Bruschetta</h3>
+        <p class="price">Rp.200.000</p>
+        <p class="description">Healthy food.</p>
+        <div class="quantity">
+<button class="qty-btn minus">-</button>
+<input type="number" value="1" class="qty-input" min="1" />
+<button class="qty-btn plus">+</button>
+</div>
+<button class="add-to-cart">Add to Cart</button>
+</div>
+        </div>
+      </section>
+
+        <!-- Modal -->
+<div id="product-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <div class="modal-header">
+      <img id="modal-img" src="" alt="Product Image" />
+    </div>
+    <div class="modal-body">
+      <h2 id="modal-title"></h2>
+      <p id="modal-description"></p>
+      <div class="modal-ingredients">
+        <h4>Ingredients</h4>
+        <div class="ingredient-list" id="modal-ingredients">
+          <!-- Ingredient Items Here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+  <script src="script.js"></script>
+</body>
+</html>
