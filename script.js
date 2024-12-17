@@ -55,56 +55,75 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// Enable drag-and-snap scrolling for categories
-function enableDragScroll() {
-  const categoryList = document.querySelector('.category-list');
+// Enable drag-and-snap scrolling with improved mobile/PC support
+function enableDragScroll(containerSelector, itemSelector) {
+  const container = document.querySelector(containerSelector);
   let isDragging = false;
-  let startX;
-  let scrollLeft;
-  let velocity = 0;
-  let isFlick = false;
+  let startX, scrollLeft, lastPageX, velocity;
 
-  categoryList.addEventListener('pointerdown', (e) => {
+  // Pointer/Touch Down Event
+  function onPointerDown(e) {
     isDragging = true;
-    startX = e.pageX - categoryList.offsetLeft;
-    scrollLeft = categoryList.scrollLeft;
-    velocity = 0; // Reset velocity on new drag
-    categoryList.style.cursor = 'grabbing';
-  });
+    startX = (e.pageX || e.touches[0].pageX) - container.offsetLeft;
+    scrollLeft = container.scrollLeft;
+    lastPageX = startX;
+    velocity = 0; // Reset velocity
+    container.style.cursor = 'grabbing';
+    container.style.scrollBehavior = 'auto'; // Disable smooth scrolling during drag
+  }
 
-  categoryList.addEventListener('pointerleave', () => {
-    if (isDragging) finishScroll();
-    isDragging = false;
-    categoryList.style.cursor = 'grab';
-  });
-
-  categoryList.addEventListener('pointerup', () => {
-    if (isDragging) finishScroll();
-    isDragging = false;
-    categoryList.style.cursor = 'grab';
-  });
-
-  categoryList.addEventListener('pointermove', (e) => {
+  // Pointer/Touch Move Event
+  function onPointerMove(e) {
     if (!isDragging) return;
     e.preventDefault();
-    const x = e.pageX - categoryList.offsetLeft;
-    const walk = (x - startX) * 1.5; // Adjust scrolling speed
-    velocity = x - startX; // Calculate velocity for snapping
-    categoryList.scrollLeft = scrollLeft - walk;
-  });
+    const pageX = (e.pageX || e.touches[0].pageX) - container.offsetLeft;
+    const walk = (pageX - startX) * 1.5; // Adjust scroll speed
+    container.scrollLeft = scrollLeft - walk;
 
-  // Smooth snapping to the nearest item
-  function finishScroll() {
-    const itemWidth = categoryList.querySelector('.category-item').offsetWidth + 10; // Include gap
-    const currentScroll = categoryList.scrollLeft;
-    const index = Math.round(currentScroll / itemWidth);
-    const targetScroll = index * itemWidth;
-
-    smoothScroll(categoryList, targetScroll, 300); // Smooth scroll to target
+    // Calculate velocity for smooth snapping
+    velocity = pageX - lastPageX;
+    lastPageX = pageX;
   }
+
+  // Pointer/Touch Up Event
+  function onPointerUp() {
+    if (!isDragging) return;
+    isDragging = false;
+    container.style.cursor = 'grab';
+    container.style.scrollBehavior = 'smooth'; // Re-enable smooth scrolling
+
+    // Snap to the nearest item
+    finishScroll(container, itemSelector, velocity);
+  }
+
+  // Smooth snapping function
+  function finishScroll(container, itemSelector, velocity) {
+    const items = container.querySelectorAll(itemSelector);
+    if (!items.length) return;
+
+    const itemWidth = items[0].offsetWidth + 10; // Item width including gap
+    const currentScroll = container.scrollLeft;
+    const index = Math.round((currentScroll - velocity * 5) / itemWidth); // Adjust index based on velocity
+    const targetScroll = Math.max(0, index * itemWidth); // Prevent negative scroll
+
+    smoothScroll(container, targetScroll, 300);
+  }
+
+  // Attach event listeners with cross-device support
+  container.addEventListener('mousedown', onPointerDown);
+  container.addEventListener('mousemove', onPointerMove);
+  container.addEventListener('mouseup', onPointerUp);
+  container.addEventListener('mouseleave', onPointerUp);
+
+  container.addEventListener('touchstart', onPointerDown, { passive: true });
+  container.addEventListener('touchmove', onPointerMove, { passive: false });
+  container.addEventListener('touchend', onPointerUp);
+  container.addEventListener('touchcancel', onPointerUp);
+
+  container.style.cursor = 'grab';
 }
 
-// Smooth scroll function
+// Smooth scroll function with easing
 function smoothScroll(element, target, duration) {
   const start = element.scrollLeft;
   const change = target - start;
@@ -116,89 +135,40 @@ function smoothScroll(element, target, duration) {
     const ease = easeOutCubic(progress);
     element.scrollLeft = start + change * ease;
 
-    if (progress < 1) {
-      requestAnimationFrame(animateScroll);
-    }
+    if (progress < 1) requestAnimationFrame(animateScroll);
   }
 
   requestAnimationFrame(animateScroll);
 }
 
-// Easing function for smoother scroll
+// Easing function for smooth effect
 function easeOutCubic(t) {
   return 1 - Math.pow(1 - t, 3);
 }
 
-// Toggle between horizontal scrolling and grid view
+// Toggle between grid view and horizontal scroll
 function toggleView() {
   const categoryList = document.querySelector('.category-list');
   const viewAllBtn = document.querySelector('.view-all-btn');
 
   if (!isViewAll) {
-    // Change to Grid View
     categoryList.classList.add('grid-view');
     viewAllBtn.textContent = 'Scroll View';
     categoryList.style.overflow = 'visible';
   } else {
-    // Change to Horizontal Scroll View
     categoryList.classList.remove('grid-view');
     viewAllBtn.textContent = 'View All';
     categoryList.style.overflow = 'hidden';
   }
-
   isViewAll = !isViewAll;
 }
 
-// Initialize drag scrolling on page load
-document.addEventListener('DOMContentLoaded', enableDragScroll);
+// Initialize drag scrolling for categories and products
+document.addEventListener('DOMContentLoaded', () => {
+  enableDragScroll('.category-list', '.category-item');
+  enableDragScroll('.product-list', '.product-item');
+});
 
-// Enable drag-and-snap scrolling for products
-function enableDragScrollProducts() {
-  const productList = document.querySelector('.product-list');
-  let isDragging = false;
-  let startX;
-  let scrollLeft;
-
-  productList.addEventListener('pointerdown', (e) => {
-    isDragging = true;
-    startX = e.pageX - productList.offsetLeft;
-    scrollLeft = productList.scrollLeft;
-    productList.style.cursor = 'grabbing'; // Change cursor to grabbing
-  });
-
-  productList.addEventListener('pointerleave', () => {
-    if (isDragging) finishScrollProducts();
-    isDragging = false;
-    productList.style.cursor = 'grab'; // Change cursor back to grab
-  });
-
-  productList.addEventListener('pointerup', () => {
-    if (isDragging) finishScrollProducts();
-    isDragging = false;
-    productList.style.cursor = 'grab'; // Change cursor back to grab
-  });
-
-  productList.addEventListener('pointermove', (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - productList.offsetLeft;
-    const walk = (x - startX) * 1.5; // Adjust scroll speed
-    productList.scrollLeft = scrollLeft - walk;
-  });
-
-  // Smooth snapping to the nearest item
-  function finishScrollProducts() {
-    const itemWidth = productList.querySelector('.product-item').offsetWidth + 15; // Include gap
-    const currentScroll = productList.scrollLeft;
-    const index = Math.round(currentScroll / itemWidth);
-    const targetScroll = index * itemWidth;
-
-    smoothScroll(productList, targetScroll, 300); // Smooth scroll to target position
-  }
-}
-
-// Initialize drag scrolling for products on page load
-document.addEventListener('DOMContentLoaded', enableDragScrollProducts);
 
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("product-modal");
@@ -414,5 +384,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Event listener for cart icon
   cartIcon.addEventListener("click", displayCart);
 });
+
 
 
