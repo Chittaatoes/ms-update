@@ -170,6 +170,35 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
+// Scroll to Product Item Based on Category
+function scrollToCategory() {
+  const categoryItems = document.querySelectorAll('.category-item');
+
+  categoryItems.forEach((item) => {
+    item.addEventListener('click', () => {
+      // Ambil nama kategori dari teks dalam elemen kategori
+      const categoryName = item.querySelector('span').innerText.toLowerCase();
+      const targetProduct = document.querySelector(
+        `.product-item[data-category="${categoryName}"]`
+      );
+
+      if (targetProduct) {
+        // Scroll ke produk yang sesuai
+        targetProduct.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
+    });
+  });
+}
+
+// Initialize scrollToCategory on page load
+document.addEventListener('DOMContentLoaded', scrollToCategory);
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("product-modal");
   const closeModal = document.querySelector(".close-btn");
